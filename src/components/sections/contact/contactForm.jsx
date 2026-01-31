@@ -23,7 +23,7 @@ const ContactForm = () => {
       setLoading(true);
       setSuccess(false);
 
-      const res = await fetch("http://localhost:5000/send-mail", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,9 @@ const ContactForm = () => {
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="name" className='text-black'>Full Name</label>
+                  <label htmlFor="name" className="text-black">
+                    Full Name
+                  </label>
                   <input
                     type="text"
                     id="name"
@@ -74,7 +76,9 @@ const ContactForm = () => {
 
               <div className="col-md-6">
                 <div className="form-group">
-                  <label htmlFor="email" className='text-black'>Email Address</label>
+                  <label htmlFor="email" className="text-black">
+                    Email Address
+                  </label>
                   <input
                     type="email"
                     id="email"
@@ -93,7 +97,9 @@ const ContactForm = () => {
 
               <div className="col-md-12">
                 <div className="form-group">
-                  <label htmlFor="message" className='text-black'>Your Message</label>
+                  <label htmlFor="message" className="text-black">
+                    Your Message
+                  </label>
                   <textarea
                     name="message"
                     id="message"
