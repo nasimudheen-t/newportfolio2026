@@ -9,7 +9,6 @@ const SingleProject = ({ params }) => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
 
   const { slug } = params;
-  console.log("sug", slug);
 
   const project = projectsData.find((p) => p.slug === slug);
 

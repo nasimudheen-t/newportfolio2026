@@ -1,12 +1,13 @@
 import nodemailer from "nodemailer";
 
+export const runtime = "nodejs";   
 export async function POST(req) {
   try {
     const { name, email, message } = await req.json();
 
     if (!name || !email || !message) {
-      return Response.json(
-        { message: "All fields are required" },
+      return new Response(
+        JSON.stringify({ message: "All fields are required" }),
         { status: 400 }
       );
     }
@@ -23,7 +24,7 @@ export async function POST(req) {
       from: `"Portfolio Contact" <${process.env.MAIL_USER}>`,
       to: process.env.MAIL_USER,
       replyTo: email,
-      subject: "New contact form message",
+      subject: `📩 Portfolio – New contact from ${name}`,
       html: `
         <h3>New Message</h3>
         <p><b>Name:</b> ${name}</p>
@@ -33,11 +34,13 @@ export async function POST(req) {
       `,
     });
 
-    return Response.json({ success: true });
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
+
   } catch (error) {
     console.error("Mail error:", error);
-    return Response.json(
-      { message: "Failed to send mail" },
+
+    return new Response(
+      JSON.stringify({ message: "Failed to send mail" }),
       { status: 500 }
     );
   }
