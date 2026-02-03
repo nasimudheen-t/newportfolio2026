@@ -1,28 +1,36 @@
-import Preloader from "@/components/ui/preloader";
+"use client";
 import "./global.css";
-import "@/assets/css/modern-theme.css";
-import BootstrapForBrowser from "@/components/ui/bootstrapForBrowser";
-import Header from "@/components/sections/header";
-import CallToAction from "@/components/sections/callToAction";
-import Footer from "@/components/sections/footer";
+import { Poppins } from "next/font/google";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { Toaster } from "sonner";
 
-export const metadata = {
-  title: "Nasimudheen - Personal Portfolio",
-  description: "Nasimudheen - Personal Portfolio React Template",
-};
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+
   return (
-    <html lang="en">
-      <body suppressHydrationWarning>
-        <BootstrapForBrowser />
-        <Preloader />
-        <Header />
-        {children}
-        <Toaster position="top-right" richColors />
-        <CallToAction />
-        <Footer />
+    <html lang="en" className="scroll-smooth">
+      <body
+        suppressHydrationWarning
+        className={`${poppins.className} antialiased bg-[#020617]`}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={pathname}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
+        <Toaster position="bottom-right" theme="dark" richColors />
       </body>
     </html>
   );

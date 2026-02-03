@@ -1,18 +1,23 @@
 "use client";
 import React, { useState } from "react";
-import { RiMailLine } from "@remixicon/react";
-import SlideUp from "@/utlits/animations/slideUp";
+import {
+  Terminal,
+  Send,
+  ChevronRight,
+  User,
+  Mail,
+  MessageSquare,
+} from "lucide-react";
+import { motion } from "framer-motion";
 import { toast } from "sonner";
+import { cn } from "@/utlits/utils";
 
 const ContactForm = () => {
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const form = e.currentTarget;
-
     const data = {
       name: form.name.value,
       email: form.email.value,
@@ -21,124 +26,129 @@ const ContactForm = () => {
 
     try {
       setLoading(true);
-      setSuccess(false);
-
       const res = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed");
-      }
-      toast.success("Message sent successfully");
-
-      setSuccess(true);
+      if (!res.ok) throw new Error("Failed");
+      toast.success("COMMAND EXECUTED: Message Transmitted.");
       form.reset();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to send message");
+      toast.error("ERROR 500: Transmission Failed.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="col-lg-8">
-      <SlideUp>
-        <div className="contact-form contact-form-area">
-          {/* only this line changed */}
-          <form className="contactForm" onSubmit={handleSubmit}>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label htmlFor="name" className="text-black">
-                    Full Name
-                  </label>
+    <div className="col-lg-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="w-full max-w-4xl mx-auto rounded-3xl border border-white/10 bg-black/80 backdrop-blur-2xl overflow-hidden shadow-2xl"
+      >
+        {/* Terminal Header */}
+        <div className="bg-white/5 px-6 py-4 flex items-center justify-between border-b border-white/10">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+          </div>
+          <div className="flex items-center gap-2 text-xs font-mono text-white/40 uppercase tracking-widest">
+            <Terminal size={14} />
+            root@nasim-dev:~/transmission-center
+          </div>
+          <div className="w-10" /> {/* Spacer */}
+        </div>
+
+        {/* Terminal Body */}
+        <div className="p-6 md:p-14">
+          <div className="mb-12 font-mono">
+            <div className="flex items-center gap-2 text-green-400 mb-2">
+              <ChevronRight size={16} />
+              <span>Initializing secure communication link...</span>
+            </div>
+            <div className="text-white/40 text-sm">
+              Waiting for identity input...
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="relative group">
+                <label className="absolute -top-7 left-2 text-[10px] font-mono text-purple-400 uppercase tracking-widest bg-black px-2 py-0.5 rounded-sm z-10">
+                  Identity.Name
+                </label>
+                <div className="flex items-center gap-4 bg-white/5 border border-white/10 group-hover:border-purple-500/30 rounded-2xl px-5 py-5 transition-all">
+                  <User
+                    size={18}
+                    className="text-white/20 group-hover:text-purple-400 transition-colors"
+                  />
                   <input
-                    type="text"
-                    id="name"
                     name="name"
-                    className="form-control"
+                    type="text"
                     placeholder="Steve Milner"
+                    className="bg-transparent border-none outline-none w-full text-white placeholder:text-white/10"
                     required
-                    data-error="Please enter your Name"
                   />
-                  <label htmlFor="name" className="for-icon">
-                    <i className="far fa-user"></i>
-                  </label>
-                  <div className="help-block with-errors"></div>
                 </div>
               </div>
 
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label htmlFor="email" className="text-black">
-                    Email Address
-                  </label>
+              <div className="relative group">
+                <label className="absolute -top-7 left-2 text-[10px] font-mono text-purple-400 uppercase tracking-widest bg-black px-2 py-0.5 rounded-sm z-10">
+                  Identity.Email
+                </label>
+                <div className="flex items-center gap-4 bg-white/5 border border-white/10 group-hover:border-purple-500/30 rounded-2xl px-5 py-5 transition-all">
+                  <Mail
+                    size={18}
+                    className="text-white/20 group-hover:text-purple-400 transition-colors"
+                  />
                   <input
-                    type="email"
-                    id="email"
                     name="email"
-                    className="form-control"
-                    placeholder="hello@websitename.com"
+                    type="email"
+                    placeholder="hello@world.com"
+                    className="bg-transparent border-none outline-none w-full text-white placeholder:text-white/10"
                     required
-                    data-error="Please enter your Email"
                   />
-                  <label htmlFor="email" className="for-icon">
-                    <i className="far fa-envelope"></i>
-                  </label>
-                  <div className="help-block with-errors"></div>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="form-group">
-                  <label htmlFor="message" className="text-black">
-                    Your Message
-                  </label>
-                  <textarea
-                    name="message"
-                    id="message"
-                    className="form-control"
-                    rows="4"
-                    placeholder="Write Your message"
-                    required
-                    data-error="Please Write your Message"
-                  ></textarea>
-                  <div className="help-block with-errors"></div>
-                </div>
-              </div>
-
-              <div className="col-md-12">
-                <div className="form-group mb-0 text-black">
-                  <button
-                    type="submit"
-                    className="theme-btn"
-                    disabled={loading}
-                  >
-                    {loading ? "Sending..." : "Send Me Message"}
-                    <i>
-                      <RiMailLine size={15} />
-                    </i>
-                  </button>
-
-                  {success && (
-                    <p style={{ color: "green", marginTop: "10px" }}>
-                      Message sent successfully
-                    </p>
-                  )}
-
-                  <div id="msgSubmit" className="hidden"></div>
                 </div>
               </div>
             </div>
+
+            <div className="relative group">
+              <label className="absolute -top-7 left-2 text-[10px] font-mono text-purple-400 uppercase tracking-widest bg-black px-2 py-0.5 rounded-sm z-10">
+                Transmission.Payload
+              </label>
+              <div className="flex items-start gap-4 bg-white/5 border border-white/10 group-hover:border-purple-500/30 rounded-3xl px-5 py-6 transition-all">
+                <MessageSquare
+                  size={18}
+                  className="text-white/20 group-hover:text-purple-400 transition-colors mt-1"
+                />
+                <textarea
+                  name="message"
+                  rows="5"
+                  placeholder="// Type your message here..."
+                  className="bg-transparent border-none outline-none w-full text-white placeholder:text-white/10 resize-none"
+                  required
+                />
+              </div>
+            </div>
+
+            <motion.button
+              whileHover={{ scale: 1.02, x: 5 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              disabled={loading}
+              className="w-full md:w-auto px-10 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-purple-500/20 transition-all disabled:opacity-50"
+            >
+              {loading ? "TRANSMITTING..." : "EXECUTE SEND"}
+              {!loading && <Send size={18} />}
+            </motion.button>
           </form>
         </div>
-      </SlideUp>
+      </motion.div>
     </div>
   );
 };

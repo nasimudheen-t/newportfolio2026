@@ -1,16 +1,20 @@
-import React from "react";
-import Hero from "../components/sections/hero";
-import Portfolio from "../components/sections/portfolio";
-import Skills from "../components/sections/skills";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import ProjectGrid from "@/components/ProjectGrid";
+import ServiceGrid from "@/components/sections/serviceGrid";
+import Contact from "@/components/Contact";
+import Particles from "@/components/Particles";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Home = () => {
+export default function Home() {
   return (
-    <>
+    <main className="bg-[#020617] min-h-screen text-white selection:bg-purple-500/30 overflow-x-hidden">
+      <Particles />
+      <Navbar />
       <Hero />
-      <Skills />
-      <Portfolio />
-    </>
+      <ProjectGrid />
+      <ServiceGrid />
+      <Contact />
+    </main>
   );
-};
-
-export default Home;
+}
