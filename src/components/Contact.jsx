@@ -4,21 +4,43 @@ import { toast } from "sonner";
 import { Send, Terminal } from "lucide-react";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setLoading(false);
-    toast.success("Command Executed: Message transmitted successfully.");
-    setFormData({ name: "", email: "", message: "" });
+
+    if (loading) return;
+
+    const form = e.currentTarget;
+
+    const data = {
+      name: form.name.value.trim(),
+      email: form.email.value.trim(),
+      message: form.message.value.trim(),
+    };
+
+    try {
+      setLoading(true);
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        throw new Error(result?.message || "Request failed");
+      }
+
+      toast.success("COMMAND EXECUTED: Message Transmitted.");
+      form.reset();
+    } catch (err) {
+      toast.error(err.message || "ERROR 500: Transmission Failed.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -35,6 +57,7 @@ export default function Contact() {
               <div className="w-3 h-3 rounded-full bg-yellow-500" />
               <div className="w-3 h-3 rounded-full bg-green-500" />
             </div>
+
             <div className="ml-4 text-xs text-gray-400 font-mono flex items-center gap-2">
               <Terminal size={12} />
               root@nasim-dev:~/contact
@@ -54,13 +77,11 @@ export default function Contact() {
                 <label className="text-purple-400 whitespace-nowrap min-w-[60px]">
                   name:
                 </label>
+
                 <input
+                  name="name"
                   type="text"
                   required
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
                   className="bg-transparent border-b border-gray-700 focus:border-green-500 text-gray-200 w-full outline-none py-1 px-2"
                   placeholder="Enter Name"
                 />
@@ -70,13 +91,11 @@ export default function Contact() {
                 <label className="text-purple-400 whitespace-nowrap min-w-[60px]">
                   email:
                 </label>
+
                 <input
+                  name="email"
                   type="email"
                   required
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
                   className="bg-transparent border-b border-gray-700 focus:border-green-500 text-gray-200 w-full outline-none py-1 px-2"
                   placeholder="Enter Email"
                 />
@@ -84,12 +103,10 @@ export default function Contact() {
 
               <div className="flex flex-col gap-2">
                 <label className="text-purple-400">message:</label>
+
                 <textarea
+                  name="message"
                   required
-                  value={formData.message}
-                  onChange={(e) =>
-                    setFormData({ ...formData, message: e.target.value })
-                  }
                   className="bg-gray-900/50 border border-gray-700 focus:border-green-500 text-gray-200 w-full outline-none p-3 h-32 rounded resize-none"
                   placeholder="// Write your query here..."
                 />
@@ -98,9 +115,10 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-4 flex items-center gap-2 bg-green-600/20 text-green-400 hover:bg-green-600/30 px-6 py-2 rounded border border-green-500/50 transition-all font-bold group"
+                className="mt-4 flex items-center gap-2 bg-green-600/20 text-green-400 hover:bg-green-600/30 px-6 py-2 rounded border border-green-500/50 transition-all font-bold group disabled:opacity-60"
               >
                 {loading ? "Transmitting..." : "Execute Send"}
+
                 {!loading && (
                   <Send
                     size={16}
