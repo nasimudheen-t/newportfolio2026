@@ -36,10 +36,11 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <button className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-purple-500/20">
-              Hire Me
-            </button>
-          </div>
+          <Link href="/contact" className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-all shadow-lg hover:shadow-purple-500/20">
+            Hire Me 
+          </Link>
+          </div>  
+
 
           {/* Mobile Toggle Button */}
           <button
