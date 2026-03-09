@@ -7,15 +7,15 @@ import { cn } from "@/utlits/utils";
 const Resume = () => {
   return (
     <section id="resume" className="py-24 px-6 bg-[#020617]">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-2">
           {/* Experience Section */}
           <div className="space-y-12">
             <div className="flex items-center gap-4 mb-8">
-              <div className="p-4 rounded-3xl bg-purple-500/10 border border-purple-500/20 text-purple-400 shadow-2xl">
+              <div className="p-4 text-purple-400 border shadow-2xl rounded-3xl bg-purple-500/10 border-purple-500/20">
                 <Briefcase size={28} />
               </div>
-              <h2 className="text-3xl font-black text-white tracking-tight uppercase">
+              <h2 className="text-3xl font-black tracking-tight text-white uppercase">
                 Experience
               </h2>
             </div>
@@ -23,9 +23,9 @@ const Resume = () => {
             <div className="space-y-6 relative before:absolute before:left-[1.65rem] before:top-2 before:bottom-2 before:w-[2px] before:bg-white/5">
               <Card
                 year={"2025 - Present"}
-                title={"MERN Stack Intern"}
+                title={"MERN Stack "}
                 institution={"Zaky Soft Pvt Ltd"}
-                description="Contributing to full-stack projects using React, Node.js, and MongoDB."
+                description="Contributing to full-stack projects "
               />
             </div>
           </div>
@@ -33,10 +33,10 @@ const Resume = () => {
           {/* Education Section */}
           <div className="space-y-12">
             <div className="flex items-center gap-4 mb-8">
-              <div className="p-4 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 shadow-2xl">
+              <div className="p-4 text-indigo-400 border shadow-2xl rounded-3xl bg-indigo-500/10 border-indigo-500/20">
                 <GraduationCap size={28} />
               </div>
-              <h2 className="text-3xl font-black text-white tracking-tight uppercase">
+              <h2 className="text-3xl font-black tracking-tight text-white uppercase">
                 Education
               </h2>
             </div>
@@ -76,14 +76,14 @@ const Card = ({ year, title, institution, description }) => {
       <div className="absolute left-6 top-6 -translate-x-1/2 w-4 h-4 rounded-full border-2 border-purple-500 bg-[#020617] group-hover:scale-125 transition-transform z-10" />
 
       <div className="p-8 rounded-[2rem] border border-white/5 bg-white/5 backdrop-blur-sm group-hover:border-purple-500/30 transition-all duration-500">
-        <span className="text-xs font-mono text-purple-400 uppercase tracking-widest block mb-2">
+        <span className="block mb-2 font-mono text-xs tracking-widest text-purple-400 uppercase">
           {year}
         </span>
-        <h4 className="text-xl font-bold text-white mb-1">{title}</h4>
-        <span className="text-sm text-slate-400 font-medium italic block mb-4">
+        <h4 className="mb-1 text-xl font-bold text-white">{title}</h4>
+        <span className="block mb-4 text-sm italic font-medium text-slate-400">
           {institution}
         </span>
-        <p className="text-sm text-slate-500 leading-relaxed">{description}</p>
+        <p className="text-sm leading-relaxed text-slate-500">{description}</p>
       </div>
     </motion.div>
   );

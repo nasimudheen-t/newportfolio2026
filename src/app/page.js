@@ -5,6 +5,7 @@ import ServiceGrid from "@/components/sections/serviceGrid";
 import Contact from "@/components/Contact";
 import Particles from "@/components/Particles";
 import { motion, AnimatePresence } from "framer-motion";
+import SkillGrid from "@/components/SkillGrid";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Particles />
       <Navbar />
       <Hero />
+      <SkillGrid/>
       <ProjectGrid />
       <ServiceGrid />
       <Contact />

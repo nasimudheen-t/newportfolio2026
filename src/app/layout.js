@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["100","200","300","400","500","600","700","800","900"],
 });
 
 export default function RootLayout({ children }) {
@@ -15,6 +15,14 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" className="scroll-smooth">
+
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+        />
+      </head>
+
       <body
         suppressHydrationWarning
         className={`${poppins.className} antialiased bg-[#020617]`}
@@ -30,6 +38,7 @@ export default function RootLayout({ children }) {
             {children}
           </motion.div>
         </AnimatePresence>
+
         <Toaster position="bottom-right" theme="dark" richColors />
       </body>
     </html>
