@@ -23,7 +23,7 @@ const Resume = () => {
             <div className="space-y-6 relative before:absolute before:left-[1.65rem] before:top-2 before:bottom-2 before:w-[2px] before:bg-white/5">
               <Card
                 year={"2025 - Present"}
-                title={"MERN Stack "}
+                title={"MERN Stack Developer"}
                 institution={"Zaky Soft Pvt Ltd"}
                 description="Contributing to full-stack projects "
               />
